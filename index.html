@@ -471,6 +471,105 @@
             transform: translateX(5px);
         }
 
+        /* Service Details Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+            animation: modalFadeIn 0.4s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: var(--danger);
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-header h2 {
+            color: var(--medical-blue);
+            font-size: 2rem;
+        }
+
+        .modal-body {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .modal-image {
+            flex: 1 1 300px;
+            height: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-text {
+            flex: 1 1 300px;
+        }
+
+        .modal-text h3 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .modal-text ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .modal-text ul li {
+            margin-bottom: 8px;
+        }
+
         /* Testimonials */
         .testimonials {
             padding: 100px 5%;
@@ -653,9 +752,61 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
+        /* Clickable phone and location */
+        .clickable-phone {
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .clickable-phone:hover {
+            color: var(--medical-green);
+            text-decoration: underline;
+        }
+
+        .clickable-location {
+            cursor: pointer;
+            transition: color 0.3s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .clickable-location:hover {
+            color: var(--medical-green);
+        }
+
+        /* Map Modal */
+        .map-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .map-modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 10px;
+            animation: modalFadeIn 0.4s ease;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 500px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
         /* Admin Section */
         .admin-section {
-            padding: 50px 5%;
+            padding: 100px 5%;
             background: #f1f8ff;
             display: none; /* Hidden by default */
         }
@@ -671,6 +822,9 @@
             cursor: pointer;
             transition: all 0.3s ease;
             margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .download-btn:hover {
@@ -817,6 +971,14 @@
             .hero h1 {
                 font-size: 2.8rem;
             }
+            
+            .modal-body {
+                flex-direction: column;
+            }
+            
+            .modal-image {
+                height: 250px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -873,6 +1035,20 @@
             .section-title h2 {
                 font-size: 2rem;
             }
+            
+            .modal-content {
+                width: 90%;
+                padding: 20px;
+            }
+            
+            .map-modal-content {
+                width: 95%;
+                padding: 15px;
+            }
+            
+            .map-container {
+                height: 400px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -883,10 +1059,124 @@
             .hero h1 {
                 font-size: 1.8rem;
             }
+            
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+            
+            .map-container {
+                height: 300px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Service Details Modals -->
+    <div id="generalMedicineModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('generalMedicineModal')">&times;</span>
+            <div class="modal-header">
+                <h2>General Medicine</h2>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img src="https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="General Medicine">
+                </div>
+                <div class="modal-text">
+                    <h3>Comprehensive Primary Care</h3>
+                    <p>Our general medicine department provides complete healthcare for adults and children, focusing on prevention, diagnosis, and treatment of a wide range of health conditions.</p>
+                    
+                    <h3>Services Include:</h3>
+                    <ul>
+                        <li>Annual physical examinations and health screenings</li>
+                        <li>Management of chronic diseases (diabetes, hypertension, etc.)</li>
+                        <li>Acute illness treatment (infections, injuries, etc.)</li>
+                        <li>Vaccinations and immunizations</li>
+                        <li>Health counseling and lifestyle advice</li>
+                        <li>Referrals to specialists when needed</li>
+                    </ul>
+                    
+                    <h3>Our Approach</h3>
+                    <p>We believe in personalized, patient-centered care that addresses not just physical health but also emotional and social well-being. Our general practitioners take time to understand each patient's unique needs and circumstances.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cardiologyModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('cardiologyModal')">&times;</span>
+            <div class="modal-header">
+                <h2>Cardiology</h2>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img src="https://images.unsplash.com/photo-1581595219315-a187dd40c322?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Cardiology">
+                </div>
+                <div class="modal-text">
+                    <h3>Advanced Heart Care</h3>
+                    <p>Our cardiology department offers comprehensive cardiovascular services using state-of-the-art technology to diagnose, treat, and prevent heart diseases.</p>
+                    
+                    <h3>Services Include:</h3>
+                    <ul>
+                        <li>Cardiac diagnostic testing (EKG, echocardiograms, stress tests)</li>
+                        <li>Treatment for coronary artery disease</li>
+                        <li>Heart failure management</li>
+                        <li>Arrhythmia diagnosis and treatment</li>
+                        <li>Preventive cardiology and risk assessment</li>
+                        <li>Cardiac rehabilitation programs</li>
+                    </ul>
+                    
+                    <h3>Our Specialists</h3>
+                    <p>Our team of board-certified cardiologists includes experts in interventional cardiology, electrophysiology, and heart failure management, providing the highest level of cardiac care.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="pediatricsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('pediatricsModal')">&times;</span>
+            <div class="modal-header">
+                <h2>Pediatrics</h2>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Pediatrics">
+                </div>
+                <div class="modal-text">
+                    <h3>Specialized Care for Children</h3>
+                    <p>Our pediatric department provides compassionate healthcare for infants, children, and adolescents in a child-friendly environment.</p>
+                    
+                    <h3>Services Include:</h3>
+                    <ul>
+                        <li>Well-child visits and developmental screenings</li>
+                        <li>Childhood immunizations</li>
+                        <li>Treatment of childhood illnesses and injuries</li>
+                        <li>Management of chronic pediatric conditions</li>
+                        <li>Adolescent medicine</li>
+                        <li>Parenting guidance and education</li>
+                    </ul>
+                    
+                    <h3>Our Approach</h3>
+                    <p>We understand that children are not just small adults. Our pediatricians are specially trained to address the unique physical, emotional, and developmental needs of children at every stage of growth.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Modal -->
+    <div id="mapModal" class="map-modal">
+        <div class="map-modal-content">
+            <span class="close-btn" onclick="closeModal('mapModal')">&times;</span>
+            <h2 style="color: var(--medical-blue); margin-bottom: 15px;">Our Location</h2>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.367207570884!2d77.2085623150823!3d28.62828338242362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x52c2b7494e204dce!2sNew%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+
     <nav class="navbar">
         <div class="logo">
             <i class="fas fa-heartbeat"></i> MediCare+
@@ -977,7 +1267,7 @@
                 <div class="service-content">
                     <h3>General Medicine</h3>
                     <p>Comprehensive primary care services for adults and children, including preventive care and chronic disease management.</p>
-                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    <a href="#" class="read-more" onclick="openModal('generalMedicineModal')">Read More <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
             <div class="service-card">
@@ -987,7 +1277,7 @@
                 <div class="service-content">
                     <h3>Cardiology</h3>
                     <p>Advanced heart care including diagnostic testing, treatment, and prevention of cardiovascular diseases.</p>
-                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    <a href="#" class="read-more" onclick="openModal('cardiologyModal')">Read More <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
             <div class="service-card">
@@ -997,7 +1287,7 @@
                 <div class="service-content">
                     <h3>Pediatrics</h3>
                     <p>Specialized care for infants, children, and adolescents, including well-child visits and immunizations.</p>
-                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    <a href="#" class="read-more" onclick="openModal('pediatricsModal')">Read More <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -1087,7 +1377,7 @@
                     </div>
                     <div>
                         <h3>Call Us</h3>
-                        <p>059472728</p>
+                        <p class="clickable-phone" onclick="makePhoneCall()">059472728</p>
                     </div>
                 </div>
                 
@@ -1107,7 +1397,7 @@
                     </div>
                     <div>
                         <h3>Visit Us</h3>
-                        <p> Medical Health, Dehli </p>
+                        <a href="#" class="clickable-location" onclick="openModal('mapModal')">Medical Health, Delhi</a>
                     </div>
                 </div>
             </div>
@@ -1190,9 +1480,9 @@
             <div class="footer-links">
                 <h3>Our Services</h3>
                 <ul>
-                    <li><a href="#">General Medicine</a></li>
-                    <li><a href="#">Cardiology</a></li>
-                    <li><a href="#">Pediatrics</a></li>
+                    <li><a href="#" onclick="openModal('generalMedicineModal')">General Medicine</a></li>
+                    <li><a href="#" onclick="openModal('cardiologyModal')">Cardiology</a></li>
+                    <li><a href="#" onclick="openModal('pediatricsModal')">Pediatrics</a></li>
                     <li><a href="#">Dermatology</a></li>
                     <li><a href="#">Neurology</a></li>
                     <li><a href="#">Emergency Care</a></li>
@@ -1205,13 +1495,13 @@
                     <div class="contact-icon">
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
-                    <p> Medical Health dehli</p>
+                    <a href="#" class="clickable-location" onclick="openModal('mapModal')">Medical Health, Delhi</a>
                 </div>
                 <div class="contact-item">
                     <div class="contact-icon">
                         <i class="fas fa-phone-alt"></i>
                     </div>
-                    <p>059472728</p>
+                    <p class="clickable-phone" onclick="makePhoneCall()">059472728</p>
                 </div>
                 <div class="contact-item">
                     <div class="contact-icon">
@@ -1398,6 +1688,29 @@
                 }
             });
         });
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target.className === 'modal' || event.target.className === 'map-modal') {
+                event.target.style.display = 'none';
+            }
+        }
+
+        // Phone call function
+        function makePhoneCall() {
+            if (confirm('Do you want to call 059472728?')) {
+                window.location.href = 'tel:059472728';
+            }
+        }
     </script>
 </body>
 </html>
